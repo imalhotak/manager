@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Gestionnaire de tâches</title>
+        <link rel='shortcut icon' type='image/x-icon' href='images/favicon.png' />
+        <!-- Tailwind CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/1.9.6/tailwind.min.css">
+
+        <!-- The core Firebase JS SDK is always required and must be listed first -->
+        <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-app.js"></script>
+
+        <!-- TODO: Add SDKs for Firebase products that you want to use
+             https://firebase.google.com/docs/web/setup#available-libraries -->
+        <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-analytics.js"></script>
+        <!-- Add Firebase products that you want to use -->
+        <script src="https://www.gstatic.com/firebasejs/7.16.0/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.16.0/firebase-firestore.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth__fr.js"></script>
+        <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css" />
+
+        <script>
+            // Your web app's Firebase configuration
+            // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+            var firebaseConfig = {
+                apiKey: "AIzaSyCfR5vVvnfqNaxTDOcHRFc7Ooo5jQiR_ds",
+                authDomain: "manager-fde36.firebaseapp.com",
+                databaseURL: "https://manager-fde36.firebaseio.com",
+                projectId: "manager-fde36",
+                storageBucket: "manager-fde36.appspot.com",
+                messagingSenderId: "1067864958809",
+                appId: "1:1067864958809:web:2fe28fed98cdd287008e48",
+                measurementId: "G-1E861N60ZL"
+            };
+            // Initialize Firebase
+            firebase.initializeApp(firebaseConfig);
+            firebase.analytics();
+        </script>
+    </head>
+    
+    <body onload="loadContainer()" class="bg-gray-300">
+
+    <div class="flex justify-center align-middle">
+        <div class="max-w-screen-xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8 items-center lg:justify-between">
+            <h1 class="text-4xl leading-9 font-extrabold tracking-tight text-gray-900 sm:text-3xl sm:leading-10">
+                Gestionnaire de tâches !
+                <br>
+                <span class="text-red-600">Identifiez-vous.</span>
+            </h1>
+            <div id="firebaseui-auth-container" class="p-5"></div>
+            <div id="loader">Chargement...</div>
+        </div>
+    </div>
+
+
+    </body>
+
+    <script>
+        function loadContainer() {
+            var ui = new firebaseui.auth.AuthUI(firebase.auth());
+
+            ui.start('#firebaseui-auth-container', {
+                callbacks: {
+                    uiShown: function() {
+                        document.getElementById('loader').style.display = 'none';
+                    }
+                },
+                signInSuccessUrl: 'pages/home.html',
+                signInOptions: [
+                    {
+                        provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
+
+                    }
+                    // firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+                    // firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+                    // firebase.auth.TwitterAuthProvider.PROVIDER_ID,
+                    // firebase.auth.GithubAuthProvider.PROVIDER_ID
+
+                ],
+            });
+        }
+
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+                window.location = "pages/home.html";
+            }
+        });
+    </script>
+</html>

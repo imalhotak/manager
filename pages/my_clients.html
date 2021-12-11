@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Mes clients</title>
+        <link rel='shortcut icon' type='image/x-icon' href='../images/favicon.png' />
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="../style.css">
+        <link rel="stylesheet" href="../external-scripts/materialize.min.css">	
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+
+        <!-- The core Firebase JS SDK is always required and must be listed first -->
+        <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-app.js"></script>
+
+        <!-- TODO: Add SDKs for Firebase products that you want to use
+             https://firebase.google.com/docs/web/setup#available-libraries -->
+        <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-analytics.js"></script>
+        <!-- Add Firebase products that you want to use -->
+        <script src="https://www.gstatic.com/firebasejs/7.16.0/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.16.0/firebase-firestore.js"></script>
+
+
+        <script>
+            // Your web app's Firebase configuration
+            // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+            var firebaseConfig = {
+                apiKey: "AIzaSyCfR5vVvnfqNaxTDOcHRFc7Ooo5jQiR_ds",
+                authDomain: "manager-fde36.firebaseapp.com",
+                databaseURL: "https://manager-fde36.firebaseio.com",
+                projectId: "manager-fde36",
+                storageBucket: "manager-fde36.appspot.com",
+                messagingSenderId: "1067864958809",
+                appId: "1:1067864958809:web:2fe28fed98cdd287008e48",
+                measurementId: "G-1E861N60ZL"
+            };
+            // Initialize Firebase
+            firebase.initializeApp(firebaseConfig);
+            firebase.analytics();
+        </script>
+
+    </head>
+    
+    <body>
+             
+        <!-- side nav content -->
+        <ul id="slide-out" class="sidenav">
+            <li>
+                <div class="user-view">
+
+                    <div class="background" style="background-color: #69a9fc;
+                    background-image: linear-gradient(62deg, #4040fc 0%, #69a9fc 100%);">
+                    </div>
+                    <img id="user_image" class="circle left" src="../images/default_user_image.png" alt="">
+                    <div id="user_name" class="white-text name leftm75"></div>
+                    <div id="user_email" class="white-text email leftm75"></div>
+                </div>
+            </li>
+
+            <li><a href="my_clients.html"><i class="fas fa-users fa-lg"></i>Mes clients</a></li>
+            <li><div class="divider"></div></li>
+            <li><a href="javascript:logOutUser();"><i class="fas fa-sign-out-alt fa-lg"></i>Déconnexion</a></li>
+        </ul>
+
+        <div style="padding: 10px; position: fixed;">
+            <a href="#" data-target="slide-out" class="sidenav-trigger btn-floating btn-large waves-effect waves-light black">
+            <i class="material-icons">menu</i>
+            </a>
+        </div>
+
+        <div id="invoice_form" class="row">
+            <div class="card" style="width: available">
+                <div class="col card m4 push-l4" style="margin: 5%;">
+                    <div class="input-field">
+                        <label for="search"><i class="material-icons">search</i>  &nbsp; Rechercher par nom</label>
+                        <input id="search" type="search" required onkeyup="maRecherche()">
+                    </div>
+                </div>
+
+                <div class="card-content">
+                <table class="striped centered">
+                    <thead>
+                        <tr>
+                            <th>Numéro du Client</th>
+                            <th>Nom du Client</th>
+                            <th>Nom et Numéro de Rue</th>
+                            <th>Code Postal</th>
+                            <th>Localité</th>
+                            <th>Numéro de Téléphone</th>
+                            <th>Numéro de TVA</th>
+                            <th>Email</th>
+                            <th>Langue</th>
+                            <th colspan="4">Tâches</th>
+                        </tr>
+                    </thead>
+                    <tbody id="user_clients">
+                    </tbody>
+                </table>
+
+                <div id="preloader" class="preloader-wrapper big active">
+                    <div class="spinner-layer spinner-blue-only">
+                        <div class="circle-clipper left">
+                            <div class="circle"></div>
+                        </div>
+                        <div class="gap-patch">
+                            <div class="circle"></div>
+                        </div>
+                        <div class="circle-clipper right">
+                            <div class="circle"></div>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="col s12">
+                        <button class='waves-effect waves-light btn modal-trigger' data-target="modal1"><i class="material-icons">add</i></button>
+                        <div id='modal1' class='modal modal-fixed-footer'>
+                            <h2>Ajouter un client</h2>
+                            <div class="row center-align"  style="margin: 40px;">
+
+                                <div class="row">
+                                    <div class="input-field s12">
+                                        <input type="text" id="client_number" disabled placeholder="">
+                                        <label for="client_number">Numéro du client</label>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="input-field s12">
+                                        <input type="text" id="client_name">
+                                        <label for="client_name">Nom du client (société ou personne physique)</label>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="input-field s12">
+                                        <input type="text" id="client_rue">
+                                        <label for="client_rue">Nom et numéro de rue</label>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="input-field s12">
+                                        <input type="text" id="client_code_postal">
+                                        <label for="client_code_postal">Code postal</label>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="input-field s12">
+                                        <input type="text" id="client_localite">
+                                        <label for="client_localite">Localité</label>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="input-field s12">
+                                        <input type="text" id="client_phone_number">
+                                        <label for="client_phone_number">Numéro de téléphone</label>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="input-field s12">
+                                        <input type="text" id="client_tva_number">
+                                        <label for="client_tva_number">Numéro de TVA</label>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="input-field s12">
+                                        <input type="text" id="client_email">
+                                        <label for="client_email">Email</label>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="s12">
+                                        <label for="client_language">Langue
+                                            <select id="client_language" class="browser-default">
+                                                <option selected>FR</option>
+                                                <option>NL</option>
+                                                <option>DE</option>
+                                            </select>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="input-field s12">
+                                        <button class='modal-close waves-effect waves-green btn-large' onclick="addNewClient()">Ajouter</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                <div class="row">
+                    <div class="col s12">
+                        <div id='modal2' class='modal modal-fixed-footer'>
+                            <h2>Modifier un client</h2>
+                            <div class="row center-align"  style="margin: 40px;">
+
+                                <div class="row">
+                                    <div class="input-field s12">
+                                        <input type="text" id="edit_client_number" disabled placeholder="">
+                                        <label for="edit_client_number">Numéro du client</label>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="input-field s12">
+                                        <input type="text" id="edit_client_name" placeholder="">
+                                        <label for="edit_client_name">Nom du client (société ou personne physique)</label>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="input-field s12">
+                                        <input type="text" id="edit_client_rue" placeholder="">
+                                        <label for="edit_client_rue">Nom et numéro de rue</label>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="input-field s12">
+                                        <input type="text" id="edit_client_code_postal" placeholder="">
+                                        <label for="edit_client_code_postal">Code postal</label>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="input-field s12">
+                                        <input type="text" id="edit_client_localite" placeholder="">
+                                        <label for="edit_client_localite">Localité</label>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="input-field s12">
+                                        <input type="text" id="edit_client_phone_number" placeholder="">
+                                        <label for="edit_client_phone_number">Numéro de téléphone</label>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="input-field s12">
+                                        <input type="text" id="edit_client_tva_number" placeholder="">
+                                        <label for="edit_client_tva_number">Numéro de TVA</label>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="input-field s12">
+                                        <input type="text" id="edit_client_email" placeholder="">
+                                        <label for="edit_client_email">Email</label>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="s12">
+                                        <label for="edit_client_language">Langue
+                                            <select id="edit_client_language" class="browser-default">
+                                                <option>FR</option>
+                                                <option>NL</option>
+                                                <option>DE</option>
+                                            </select>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="input-field s12">
+                                        <button id="edit_client_infos" class='modal-close waves-effect waves-green btn-large' onclick="editClient(this.value)">Modifier</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+
+    <script src="../scripts/my_clients.js"></script>
+    <script src="../external-scripts/materialize.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var elems = document.querySelectorAll('select');
+            var instances = M.FormSelect.init(elems);
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var elems = document.querySelectorAll('.sidenav');
+            var instances = M.Sidenav.init(elems, {});
+        });
+
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+                retrieveUsersFromFirestore();
+
+                if (user.photoURL) {
+                    document.getElementById("user_image").src = user.photoURL;
+                }
+                document.getElementById("user_name").innerText = user.displayName;
+                document.getElementById("user_email").innerText = user.email;
+            } else {
+                window.location = "../index.html";
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var elems = document.querySelectorAll('.modal');
+            var instances = M.Modal.init(elems);
+        });
+
+        function logOutUser() {
+            firebase.auth().signOut().then(function() {
+                document.location.href = "https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=https://faisalhotak.github.io/Manager/"
+            }).catch(function(error) {
+                console.log(error);
+            });
+        }
+
+        function maRecherche(){
+            var input, filter, div_user, tr, a, i, txtValue;
+            input = document.getElementById('search');
+            filter = input.value.toUpperCase();
+            div_user = document.getElementById('user_clients');
+            tr = div_user.getElementsByTagName('tr');
+            for (i = 0; i < tr.length ; i++){
+                a = tr[i].getElementsByTagName('td')[1];
+                txtValue = a.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1){
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+
+    </script>
+</html>
