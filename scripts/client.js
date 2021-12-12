@@ -76,8 +76,7 @@ function addClient(client) {
     let appointmentMandate = "<p>" + new Date(client.appointmentMandate).toLocaleDateString() + ' - ' + new Date(client.appointmentMandate).toLocaleTimeString().substr(0, 5) + "</p>";
     let appointmentCODA = "<p>" + new Date(client.appointmentCODA).toLocaleDateString() + ' - ' + new Date(client.appointmentCODA).toLocaleTimeString().substr(0, 5) + "</p>";
     let appointmentBankStatement = "<p>" + new Date(client.appointmentBankStatement).toLocaleDateString() + ' - ' + new Date(client.appointmentBankStatement).toLocaleTimeString().substr( 0,5) + "</p>";
-    let street = "<p>" + client.street ? client.street : '' + "</p>";
-    let streetNumber = "<p>" + client.streetNumber + "</p>";
+    let streetAndNumber = "<p>" + client.street + ' ' + client.streetNumber + "</p>";
     let postCodeAndCity = "<p>" + client.postCode + ' ' + client.city + "</p>";
     let language = "<p>" + client.language + "</p>";
 
@@ -89,7 +88,7 @@ function addClient(client) {
         "<table class='highlight'>" +
         "<tr><th>Numéro du client</th><td>" + number + "</td></tr>" +
         "<tr><th>Nom</th><td>" + name + "</td></tr>" +
-        "<tr><th>Adresse</th><td><span id='copyAdress' " + street + streetNumber + "</span><button type=\"button\" class=\"right btn-small bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded\" onclick=\"copyText('copyAdress')\"><i class='material-icons'>content_copy</i></button></td></tr>"+
+        "<tr><th>Adresse</th><td><span id='copyAdress' " + streetAndNumber + "</span><button type=\"button\" class=\"right btn-small bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded\" onclick=\"copyText('copyAdress')\"><i class='material-icons'>content_copy</i></button></td></tr>"+
         "<tr><th>Localité</th><td><span id='copyCity'>" + postCodeAndCity + "</span><button type=\"button\" class=\"right btn-small bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded\" onclick=\"copyText('copyCity')\"><i class='material-icons'>content_copy</i></button></td></tr>"+
         "<tr><th>Numéro de TVA (BE)</th><td class='row'><span class='col' id='copyTva'>" +
         tvaNumber + "</span><button type=\"button\" class=\"right btn-small bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded\" onclick=\"copyText('copyTva')\">" +
