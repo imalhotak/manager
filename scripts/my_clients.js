@@ -34,7 +34,6 @@ function retrieveUsersFromFirestore() {
         }
         else {
             compteur = 1;
-            alert("Aucun client n'a été retrouvé. Veuillez en ajouter.");
         }
 
 
