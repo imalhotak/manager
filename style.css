@@ -2,8 +2,8 @@
     margin: auto;
     padding: 20px;
     text-align: center;
-    width: 85%;
-    height: auto;
+    width: 90%;
+    height: 100vh;
 }
 
 .invoice_element {
@@ -240,6 +240,39 @@ li .collapsible-header {
 
 #add_person:hover {
     transform: translateY(-5px) scale(1.2);
+}
+
+.alert-box {
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid;
+    border-radius: .5em;
+    text-align: center;
+    width: 45%;
+    display: none;
+}
+
+.warning_success {
+    color: #ffffff;
+    background-color: #68de64;
+    font-family: "Source Code Pro", sans-serif;
+    font-size: x-large;
+    display: none;
+}
+
+.warning_failure {
+    color: #ffffff;
+    background-color: #de6464;
+    font-family: "Source Code Pro", sans-serif;
+    font-size: x-large;
+    display: none;
+}
+
+footer {
+    position: fixed;
+    bottom: 5%;
+    width: 100%;
+    text-align: center;
 }
 
 @media only screen and (max-width: 1200px) {

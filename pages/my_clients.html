@@ -25,19 +25,17 @@
         <script>
             // Your web app's Firebase configuration
             // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-            var firebaseConfig = {
-                apiKey: "AIzaSyCfR5vVvnfqNaxTDOcHRFc7Ooo5jQiR_ds",
-                authDomain: "manager-fde36.firebaseapp.com",
-                databaseURL: "https://manager-fde36.firebaseio.com",
-                projectId: "manager-fde36",
-                storageBucket: "manager-fde36.appspot.com",
-                messagingSenderId: "1067864958809",
-                appId: "1:1067864958809:web:2fe28fed98cdd287008e48",
-                measurementId: "G-1E861N60ZL"
+            const firebaseConfig = {
+                apiKey: "AIzaSyBa_ZWHn-adQ1u4h7SQd3Mr-Ulf_2CoBCA",
+                authDomain: "manager-ac9b5.firebaseapp.com",
+                projectId: "manager-ac9b5",
+                storageBucket: "manager-ac9b5.appspot.com",
+                messagingSenderId: "91632136911",
+                appId: "1:91632136911:web:dd36af349457cb20597dba",
+                measurementId: "${config.measurementId}"
             };
             // Initialize Firebase
             firebase.initializeApp(firebaseConfig);
-            firebase.analytics();
         </script>
 
     </head>
@@ -58,7 +56,7 @@
                 </div>
             </li>
 
-            <li><a href="my_clients.html"><i class="fas fa-users fa-lg"></i>Mes clients</a></li>
+            <li><a href="home.html"><i class="fas fa-home fa-lg"></i>Accueil</a></li>
             <li><div class="divider"></div></li>
             <li><a href="javascript:logOutUser();"><i class="fas fa-sign-out-alt fa-lg"></i>Déconnexion</a></li>
         </ul>
@@ -79,38 +77,34 @@
                 </div>
 
                 <div class="card-content">
-                <table class="striped centered">
+                <table class="striped centered" style="font-size: 11px">
                     <thead>
                         <tr>
-                            <th>Numéro du Client</th>
-                            <th>Nom du Client</th>
-                            <th>Nom et Numéro de Rue</th>
-                            <th>Code Postal</th>
+                            <th>N°</th>
+                            <th>Nom</th>
+                            <th>Rue</th>
+                            <th>Numéro de rue</th>
                             <th>Localité</th>
-                            <th>Numéro de Téléphone</th>
-                            <th>Numéro de TVA</th>
+                            <th>Code postal</th>
+                            <th>Numéro de TVA (BE)</th>
+                            <th>Activité</th>
+                            <th>Documents financiers</th>
                             <th>Email</th>
+                            <th>Téléphone</th>
+                            <th>Mandat</th>
+                            <th>Registre UBO</th>
+                            <th>Secrétariat</th>
+                            <th>Importance</th>
+                            <th>Mandat</th>
+                            <th>CODA</th>
+                            <th>Extrait de Banque</th>
                             <th>Langue</th>
-                            <th colspan="4">Tâches</th>
+                            <th colspan="3">Actions</th>
                         </tr>
                     </thead>
                     <tbody id="user_clients">
                     </tbody>
                 </table>
-
-                <div id="preloader" class="preloader-wrapper big active">
-                    <div class="spinner-layer spinner-blue-only">
-                        <div class="circle-clipper left">
-                            <div class="circle"></div>
-                        </div>
-                        <div class="gap-patch">
-                            <div class="circle"></div>
-                        </div>
-                        <div class="circle-clipper right">
-                            <div class="circle"></div>
-                        </div>
-                    </div>
-                </div>
                 <br/>
                 <div class="row">
                     <div class="col s12">
@@ -118,67 +112,132 @@
                         <div id='modal1' class='modal modal-fixed-footer'>
                             <h2>Ajouter un client</h2>
                             <div class="row center-align"  style="margin: 40px;">
-
                                 <div class="row">
                                     <div class="input-field s12">
-                                        <input type="text" id="client_number" disabled placeholder="">
-                                        <label for="client_number">Numéro du client</label>
+                                        <input type="text" id="number" disabled placeholder="">
+                                        <label for="number">Numéro du client</label>
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="input-field s12">
-                                        <input type="text" id="client_name">
-                                        <label for="client_name">Nom du client (société ou personne physique)</label>
+                                        <input type="text" id="name">
+                                        <label for="name">Nom du client</label>
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="input-field s12">
-                                        <input type="text" id="client_rue">
-                                        <label for="client_rue">Nom et numéro de rue</label>
+                                        <input type="text" id="street">
+                                        <label for="street">Rue</label>
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="input-field s12">
-                                        <input type="text" id="client_code_postal">
-                                        <label for="client_code_postal">Code postal</label>
+                                        <input type="text" id="streetNumber">
+                                        <label for="streetNumber">Numéro de rue</label>
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="input-field s12">
-                                        <input type="text" id="client_localite">
-                                        <label for="client_localite">Localité</label>
+                                        <input type="text" id="city">
+                                        <label for="city">Localité</label>
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="input-field s12">
-                                        <input type="text" id="client_phone_number">
-                                        <label for="client_phone_number">Numéro de téléphone</label>
+                                        <input type="text" id="postCode">
+                                        <label for="postCode">Code postal</label>
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="input-field s12">
-                                        <input type="text" id="client_tva_number">
-                                        <label for="client_tva_number">Numéro de TVA</label>
+                                        <input type="text" id="tvaNumber">
+                                        <label for="tvaNumber">Numéro de TVA</label>
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="input-field s12">
-                                        <input type="text" id="client_email">
-                                        <label for="client_email">Email</label>
+                                        <input type="text" id="activity">
+                                        <label for="activity">Activité</label>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="input-field s12">
+                                        <input type="text" id="bankStatement">
+                                        <label for="bankStatement">Documents financiers</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="input-field s12">
+                                        <input type="text" id="email">
+                                        <label for="email">Email</label>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="input-field s12">
+                                        <input type="text" id="phoneNumber">
+                                        <label for="phoneNumber">Téléphone</label>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col s6">
+                                        <span>Mandat</span>
+                                        <div class='switch'><label>Non<input type='checkbox' id="mandate"><span class='lever'></span>Oui</label></div>
+                                    </div>
+                                    <div class="col s6">
+                                        <span>Registre UBO</span>
+                                        <div class='switch'><label>Non<input type='checkbox' id="uboRegister"><span class='lever'></span>Oui</label></div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="input-field s12">
+                                        <input type="text" id="secretary">
+                                        <label for="secretary">Secrétariat</label>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="input-field s12">
+                                        <input type="text" id="importance">
+                                        <label for="importance">Importance</label>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="input-field s12">
+                                        <input type="datetime-local" id="appointmentMandate">
+                                        <label for="appointmentMandate">Mandat</label>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="input-field s12">
+                                        <input type="datetime-local" id="appointmentCODA">
+                                        <label for="appointmentCODA">CODA</label>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="input-field s12">
+                                        <input type="datetime-local" id="appointmentBankStatement">
+                                        <label for="appointmentBankStatement">Extrait de Banque</label>
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="s12">
-                                        <label for="client_language">Langue
-                                            <select id="client_language" class="browser-default">
+                                        <label for="language">Langue
+                                            <select id="language" class="browser-default">
                                                 <option selected>FR</option>
                                                 <option>NL</option>
                                                 <option>DE</option>
@@ -213,49 +272,151 @@
                                 <div class="row">
                                     <div class="input-field s12">
                                         <input type="text" id="edit_client_name" placeholder="">
-                                        <label for="edit_client_name">Nom du client (société ou personne physique)</label>
+                                        <label for="edit_client_name">Nom</label>
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="input-field s12">
-                                        <input type="text" id="edit_client_rue" placeholder="">
-                                        <label for="edit_client_rue">Nom et numéro de rue</label>
+                                        <input type="text" id="edit_client_street" placeholder="">
+                                        <label for="edit_client_street">Rue</label>
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="input-field s12">
-                                        <input type="text" id="edit_client_code_postal" placeholder="">
-                                        <label for="edit_client_code_postal">Code postal</label>
+                                        <input type="text" id="edit_client_streetNumber" placeholder="">
+                                        <label for="edit_client_streetNumber">Numéro de rue</label>
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="input-field s12">
-                                        <input type="text" id="edit_client_localite" placeholder="">
-                                        <label for="edit_client_localite">Localité</label>
+                                        <input type="text" id="edit_client_city" placeholder="">
+                                        <label for="edit_client_city">Localité</label>
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="input-field s12">
-                                        <input type="text" id="edit_client_phone_number" placeholder="">
-                                        <label for="edit_client_phone_number">Numéro de téléphone</label>
+                                        <input type="text" id="edit_client_postCode" placeholder="">
+                                        <label for="edit_client_postCode">Code postal</label>
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="input-field s12">
-                                        <input type="text" id="edit_client_tva_number" placeholder="">
-                                        <label for="edit_client_tva_number">Numéro de TVA</label>
+                                        <input type="text" id="edit_client_tvaNumber" placeholder="">
+                                        <label for="edit_client_tvaNumber">Numéro de TVA</label>
                                     </div>
                                 </div>
+
+                                <div class="row">
+                                    <div class="input-field s12">
+                                        <input type="text" id="edit_client_activity" placeholder="">
+                                        <label for="edit_client_activity">Activité</label>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="input-field s12">
+                                        <input type="text" id="edit_client_bankStatement" placeholder="">
+                                        <label for="edit_client_bankStatement">Documents financiers</label>
+                                    </div>
+                                </div>
+
+<!--                                <div class="row">-->
+<!--                                    <div class="input-field s12">-->
+<!--                                        <input type="text" id="edit_client_bank" placeholder="">-->
+<!--                                        <label for="edit_client_bank">Banque</label>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+
+<!--                                <div class="row">-->
+<!--                                    <div class="input-field s12">-->
+<!--                                        <input type="text" id="edit_client_clients" placeholder="">-->
+<!--                                        <label for="edit_client_clients">Clients</label>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+
+<!--                                <div class="row">-->
+<!--                                    <div class="input-field s12">-->
+<!--                                        <input type="text" id="edit_client_suppliers" placeholder="">-->
+<!--                                        <label for="edit_client_suppliers">Fournisseurs</label>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+
+<!--                                <div class="row">-->
+<!--                                    <div class="input-field s12">-->
+<!--                                        <input type="text" id="edit_client_wage" placeholder="">-->
+<!--                                        <label for="edit_client_wage">Salaire</label>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+
+<!--                                <div class="row">-->
+<!--                                    <div class="input-field s12">-->
+<!--                                        <input type="text" id="edit_client_code499000" placeholder="">-->
+<!--                                        <label for="edit_client_code499000">499000</label>-->
+<!--                                    </div>-->
+<!--                                </div>-->
 
                                 <div class="row">
                                     <div class="input-field s12">
                                         <input type="text" id="edit_client_email" placeholder="">
                                         <label for="edit_client_email">Email</label>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="input-field s12">
+                                        <input type="text" id="edit_client_phoneNumber" placeholder="">
+                                        <label for="edit_client_phoneNumber">Téléphone</label>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col s6">
+                                        <span>Mandat</span>
+                                        <div class='switch'><label>Non<input type='checkbox' id="edit_client_mandate"><span class='lever'></span>Oui</label></div>
+                                    </div>
+                                    <div class="col s6">
+                                        <span>Registre UBO</span>
+                                        <div class='switch'><label>Non<input type='checkbox' id="edit_client_uboRegister"><span class='lever'></span>Oui</label></div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="input-field s12">
+                                        <input type="text" id="edit_client_secretary" placeholder="">
+                                        <label for="edit_client_secretary">Secrétariat</label>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="input-field s12">
+                                        <input type="text" id="edit_client_importance" placeholder="">
+                                        <label for="edit_client_importance">Importance</label>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="input-field s12">
+                                        <input type="datetime-local" id="edit_client_appointmentMandate" placeholder="">
+                                        <label for="edit_client_appointmentMandate">Mandat</label>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="input-field s12">
+                                        <input type="datetime-local" id="edit_client_appointmentCODA" placeholder="">
+                                        <label for="edit_client_appointmentCODA">CODA</label>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="input-field s12">
+                                        <input type="datetime-local" id="edit_client_appointmentBankStatement" placeholder="">
+                                        <label for="edit_client_appointmentBankStatement">Extrait de Banque</label>
                                     </div>
                                 </div>
 
@@ -284,10 +445,29 @@
         </div>
     </body>
 
+    <!-- Full screen preloader -->
+    <div class="main-loader">
+        <div class="preloader-wrapper big active">
+            <div class="spinner-layer spinner-blue-only">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div>
+                <div class="gap-patch">
+                    <div class="circle"></div>
+                </div>
+                <div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="../scripts/my_clients.js"></script>
     <script src="../external-scripts/materialize.min.js"></script>
 
     <script>
+
+
         document.addEventListener('DOMContentLoaded', function() {
             var elems = document.querySelectorAll('select');
             var instances = M.FormSelect.init(elems);
@@ -300,13 +480,13 @@
 
         firebase.auth().onAuthStateChanged(function(user) {
             if (user) {
-                retrieveUsersFromFirestore();
-
                 if (user.photoURL) {
                     document.getElementById("user_image").src = user.photoURL;
                 }
                 document.getElementById("user_name").innerText = user.displayName;
                 document.getElementById("user_email").innerText = user.email;
+
+                retrieveUsersFromFirestore();
             } else {
                 window.location = "../index.html";
             }
@@ -319,7 +499,7 @@
 
         function logOutUser() {
             firebase.auth().signOut().then(function() {
-                document.location.href = "https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=https://faisalhotak.github.io/Manager/"
+                document.location.href = "https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=https://imalhotak.github.io/manager/"
             }).catch(function(error) {
                 console.log(error);
             });
