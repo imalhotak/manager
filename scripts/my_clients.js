@@ -64,17 +64,6 @@ function removeClient(clientNumber, clientName) {
                 let filtered = clients_list.filter(function(el) { return el.number !== clientNumber});
                 let new_data= {'clients' : filtered};
 
-                db.collection("tasks").where("mail", "==", user_email).where("number", "==", clientNumber)
-                    .get()
-                    .then(function(querySnapshot) {
-                        querySnapshot.forEach(function(doc) {
-                            doc.ref.delete();
-                        })
-                    })
-                    .catch(function(error) {
-                        alert("Erreur lors de la suppression des tâches liées au client.");
-                    });
-
                 db.collection('clients').doc(user_email).update({
                     data: JSON.stringify(new_data)
                 })
