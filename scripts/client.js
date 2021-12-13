@@ -90,12 +90,12 @@ function addClient(client) {
         "<tr><th>Nom</th><td>" + name + "</td></tr>" +
         "<tr><th>Adresse</th><td><span id='copyAdress' " + streetAndNumber + "</span><button type=\"button\" class=\"right btn-small bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded\" onclick=\"copyText('copyAdress')\"><i class='material-icons'>content_copy</i></button></td></tr>"+
         "<tr><th>Localité</th><td><span id='copyCity'>" + postCodeAndCity + "</span><button type=\"button\" class=\"right btn-small bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded\" onclick=\"copyText('copyCity')\"><i class='material-icons'>content_copy</i></button></td></tr>"+
-        "<tr><th>Numéro de TVA (BE)</th><td class='row'><span class='col' id='copyTva'>" +
+        "<tr><th>Numéro de TVA (BE)</th><td class='row'><span id='copyTva'>" +
         tvaNumber + "</span><button type=\"button\" class=\"right btn-small bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded\" onclick=\"copyText('copyTva')\">" +
         "<i class='material-icons'>content_copy</i></button></td></tr>" +
-        "<tr><th>Email</th><td class='row'><span class='col' id='copyEmail'>" + email + "</span><button type=\"button\" class=\"right btn-small bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded\" onclick=\"copyText('copyEmail')\">" +
+        "<tr><th>Email</th><td class='row'><span id='copyEmail'>" + email + "</span><button type=\"button\" class=\"right btn-small bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded\" onclick=\"copyText('copyEmail')\">" +
         "<i class='material-icons'>content_copy</i></button></td></tr>" +
-        "<tr><th>Téléphone</th><td class='row'><span class='col' id='copyPhone'>" + phoneNumber + "</span><button type=\"button\" class=\"right btn-small bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded\" onclick=\"copyText('copyPhone')\">" +
+        "<tr><th>Téléphone</th><td class='row'><span id='copyPhone'>" + phoneNumber + "</span><button type=\"button\" class=\"right btn-small bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded\" onclick=\"copyText('copyPhone')\">" +
         "<i class='material-icons'>content_copy</i></button></td></tr>" +
         "<tr><th>Activité</th><td>" + activity + "</td></tr>" +
         "<tr><th>Documents financiers</th><td>" + bankStatement + "</td></tr>" +
